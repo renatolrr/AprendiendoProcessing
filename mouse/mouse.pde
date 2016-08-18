@@ -1,26 +1,23 @@
 // ejemplo by renatolrr
-float x = 0.0;
+int frame = 0;
 
 void setup() {
   size(100, 100);
-  noLoop();
 }
  
 void draw() {
-  
-  frameRate(60);
-  
-  background(204);
- 
-  if (x < 80){
-    if (x < 40){
-      ellipse(50, 50, 20, 20);
+  if (frame > 120){
+    noLoop();
+    background(0);
     }else{
-      ellipse(50, 50, 60, 60);
+      background(204);
+      line(mouseX, 0, mouseX, 100);
+      line(0, mouseY, 100, mouseY);
+      frame++;
     }
-    }else{
-      rect(20, 20, 60, 60);
-    }
-    line(x, 0, x, 100);
-    x += 0.25;
+}
+
+void mousePressed(){
+  loop();
+  frame = 0;
 }
