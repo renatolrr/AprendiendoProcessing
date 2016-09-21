@@ -18,6 +18,12 @@ void draw(){
 
   ball1.move();
   ball2.move();
+
+  if(ball1.intersect(ball2)){
+    ball1.highlight();
+    ball2.highlight();
+  }
+
   ball1.display();
   ball2. display();
 }
@@ -49,7 +55,8 @@ class Ball{
   float r;
   float x,y;
   float xspeed, yspeed;
-  
+  color c = color(100, 50);
+    
   Ball(float tempR){
     r = tempR;
     x = random(width);
@@ -70,9 +77,24 @@ class Ball{
       yspeed *= -1;
     }
   }
+ 
+  void highlight(){
+    c = color(0, 150);
+  }
+ 
   void display(){
     stroke(0);
-    fill(0, 50);
+    fill(c);
     ellipse(x, y, r*2, r*2);
+    c= color(100,50);
   }
+
+boolean intersect(Ball b){
+  float distance = dist( x, y, b.x, b.y);
+  if (distance <= r + b.r){
+    return true;
+  }else{
+    return false;
+  }
+}
 }
