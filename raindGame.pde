@@ -1,14 +1,15 @@
 Catcher catcher;
+Timer timer;
+Drop[] drops;
 
-Ball ball1;
-Ball ball2;
+int totalDrops = 0;
 
 void setup(){
   size(400,400);
   catcher = new Catcher(32);
-
-  ball1 = new Ball(64);
-  ball2 = new Ball(32);
+  drops = new Drop[1000];
+  timer = Timer(300);
+  timer.start();
 }
 
 void draw(){
@@ -16,9 +17,16 @@ void draw(){
   catcher.setLocation(mouseX, mouseY);
   catcher.display();
 
-  ball1.move();
-  ball2.move();
-
+  if(timer.isFinished()){
+    drops[totalDrops] = new Drop();
+    totalDrops++;
+    if(totalDrops >= drops.length){
+      totalDrops = 0;
+      
+    }
+    
+  }
+  
   if(ball1.intersect(ball2)){
     ball1.highlight();
     ball2.highlight();
