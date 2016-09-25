@@ -8,7 +8,7 @@ void setup(){
   size(400,400);
   catcher = new Catcher(32);
   drops = new Drop[1000];
-  timer = Timer(300);
+  timer = new Timer(300);
   timer.start();
 }
 
@@ -23,7 +23,7 @@ void draw(){
     if(totalDrops >= drops.length){
       totalDrops = 0;
     }
-    time.start(); 
+    timer.start(); 
   }
   
   for(int i = 0; i < totalDrops; i++){
@@ -58,9 +58,9 @@ class Catcher{
      ellipse(x, y, r*2, r*2);
    }
 
-  bolean instersect(Drop d){
+  boolean instersect(Drop d){
     float distance = dist(x, y, d.x, d.y);
-    if(distance < r + dr){
+    if(distance < r + d.r){
       return true;
       }else{
         return false;
@@ -120,4 +120,4 @@ class Timer{
         return false;
     }
   }
-} 
+}
