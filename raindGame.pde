@@ -22,27 +22,27 @@ void draw(){
     totalDrops++;
     if(totalDrops >= drops.length){
       totalDrops = 0;
-      
     }
-    
+    time.start(); 
   }
   
-  if(ball1.intersect(ball2)){
-    ball1.highlight();
-    ball2.highlight();
+  for(int i = 0; i < totalDrops; i++){
+    drops[i].move();
+    drops[i].display();
+    if(catcher.instersect(drops[i])){
+      drops[i].caught();
+    }
   }
-
-  ball1.display();
-  ball2. display();
 }
 
 class Catcher{
   float r;
-  float x;
-  float y;
+  color col;
+  float x, y;
   
   Catcher(float tempR){
     r = tempR;
+    col = color(50, 10, 10, 150);  
     x = 0;
     y = 0;
    }
@@ -54,55 +54,70 @@ class Catcher{
    
    void display(){
      stroke(0);
-     fill(175);
+     fill(col);
      ellipse(x, y, r*2, r*2);
    }
+
+  bolean instersect(Drop d){
+    float distance = dist(x, y, d.x, d.y);
+    if(distance < r + dr){
+      return true;
+      }else{
+        return false;
+    }
+  }
 }
 
-class Ball{
-  float r;
+class Drop{
   float x,y;
-  float xspeed, yspeed;
-  color c = color(100, 50);
+  float speed;
+  color c;
+  float r;
     
-  Ball(float tempR){
-    r = tempR;
+  Drop(){
+    r = 8;
     x = random(width);
-    y = random(height);
-    xspeed = random(-5, 5);
-    yspeed = random(-5, 5);
+    y = -r+4;
+    speed = random(1, 5);
+    c = color(50, 50, 100, 150);
   }
 
   void move(){
-    x += xspeed;
-    y += yspeed;
-    
-    if(x > width || x < 0){
-      xspeed *= -1;
-    }
-    
-    if(y > height || y < 0){
-      yspeed *= -1;
-    }
-  }
- 
-  void highlight(){
-    c = color(0, 150);
+    y += speed;
   }
  
   void display(){
-    stroke(0);
+    noStroke();
     fill(c);
-    ellipse(x, y, r*2, r*2);
-    c= color(100,50);
+    for(int i = 2; i < r; i++){
+      ellipse(x, y+1*4, i*2, i*2);
+    }
   }
+  
+  void caught(){
+    speed = 0;
+    y = -1000;  
+  }
+}
 
-boolean intersect(Ball b){
-  float distance = dist( x, y, b.x, b.y);
-  if (distance <= r + b.r){
-    return true;
-  }else{
-    return false;
+class Timer{
+  int savedTime;
+  int totalTime;
+  
+  Timer(int tempTotalTime){
+    totalTime = tempTotalTime;
   }
-}
-}
+  
+  void start(){
+    savedTime = millis();
+  }
+  
+  boolean isFinished(){
+    int passedTime = millis() - savedTime;
+    if(passedTime > totalTime){
+      return true;
+      }else{
+        return false;
+    }
+  }
+} 
