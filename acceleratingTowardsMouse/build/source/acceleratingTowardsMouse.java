@@ -1,12 +1,28 @@
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class acceleratingTowardsMouse extends PApplet {
+
 
 Mover mover;
 
-void setup(){
-  size(640, 360);
+public void setup(){
+  
   mover = new Mover();
 }
 
-void draw(){
+public void draw(){
   background(255);
 
   mover.update();
@@ -24,11 +40,11 @@ class Mover{
   Mover(){
     location = new PVector(width/2, height/2);
     velocity = new PVector(0, 0);
-    acceleration = new PVector(-0.001, 0.01);
+    acceleration = new PVector(-0.001f, 0.01f);
     topspeed = 10;
   }
 
-  void update(){
+  public void update(){
 
     //acceleration = PVector.random2D();
 
@@ -37,7 +53,7 @@ class Mover{
 
     dir.normalize();
 
-    dir.mult(0.5);
+    dir.mult(0.5f);
 
     acceleration = dir;
 
@@ -47,13 +63,13 @@ class Mover{
     location.add(velocity);
   }
 
-  void display(){
+  public void display(){
     stroke(0);
     fill(175);
     ellipse(location.x, location.y, 16, 16);
   }
 
-  void checkEdges(){
+  public void checkEdges(){
     if(location.x > width){
       location.x = 0;
     }else if(location.x < 0){
@@ -63,6 +79,16 @@ class Mover{
       location.y = 0;
     }else if(location.y < 0){
       location.x = height;
+    }
+  }
+}
+  public void settings() {  size(640, 360); }
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "acceleratingTowardsMouse" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
     }
   }
 }
