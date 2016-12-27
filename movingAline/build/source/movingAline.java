@@ -16,14 +16,16 @@ public class movingAline extends PApplet {
 
 public void setup(){
   
+  // frameRate(120);
 }
 
 int i = 0;
 
 public void draw(){
   background(200);
-  line(i%300, 0, i%300, 100);
-  i++;
+  // line(i%300, 0, i%300, 100);
+  // i++;
+  line(mouseX, 0, mouseX, 100);
 }
   public void settings() {  size(300, 100); }
   static public void main(String[] passedArgs) {
