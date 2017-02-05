@@ -36,7 +36,7 @@ public void drawCircle1(float x, float y, float radius){
 }
 
 public void drawCircle2(float x, float y, float radius){
-  stroke(random(0,255));
+  stroke(0);
   noFill();
   ellipse( x, y, radius, radius);
   if(radius > 2){
